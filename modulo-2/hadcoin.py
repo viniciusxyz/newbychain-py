@@ -61,7 +61,7 @@ class BlockChain:
             
             previous_proof = previous_block['proof']
             proof = block['proof'] 
-            hash_operation = hashlib.sha3_256(str(proof**2 - previous_proof**2).encode()).hexdigest()
+            hash_operation = hashlib.sha256(str(proof**2 - previous_proof**2).encode()).hexdigest()
             
             if hash_operation[:4] != '0000':
                 return False
@@ -145,7 +145,7 @@ def is_valid():
 
 @app.route('/add_transaction', methods=['POST'])
 def add_transaction():
-    json = request.get_json()
+    json = request.get_json(cache=False)
     transaction_keys = ['sender', 'receiver','amount']
     if not all(key in json for key in transaction_keys):
         return 'Alguns elementos estão faltando', 400

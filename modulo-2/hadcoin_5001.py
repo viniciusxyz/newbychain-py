@@ -145,7 +145,7 @@ def is_valid():
 
 @app.route('/add_transaction', methods=['POST'])
 def add_transaction():
-    json = request.get_json()
+    json = request.get_json(cache=False)
     transaction_keys = ['sender', 'receiver','amount']
     if not all(key in json for key in transaction_keys):
         return 'Alguns elementos estão faltando', 400
